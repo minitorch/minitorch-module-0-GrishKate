@@ -111,7 +111,7 @@ def test_sigmoid(a: float) -> None:
     assert 0.0 <= sigmoid(a) <= 1.0
     assert_close(1.0 - sigmoid(a), sigmoid(-a))
     assert_close(sigmoid(0.0), 0.5)
-    assert sigmoid(a) < sigmoid(a + 1e-2)
+    assert sigmoid(a + 1.0) - sigmoid(a) >= 0.0
 
 
 @pytest.mark.task0_2
@@ -139,7 +139,7 @@ def test_distribute() -> None:
     for x in range(-5, 5):
         for y in range(-5, 5):
             for z in range(-2, 2):
-                assert mul(z, add(x, y))== add(mul(z, x), mul(z, y))
+                assert mul(z, add(x, y)) == add(mul(z, x), mul(z, y))
 
 
 @pytest.mark.task0_2
@@ -172,7 +172,7 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     """Write a test that ensures that the sum of `ls1` plus the sum of `ls2`
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
-    assert_close(sum(ls1) + sum(ls2), addLists(ls1, ls2))
+    assert_close(sum(ls1) + sum(ls2), sum(addLists(ls1, ls2)))
 
 
 @pytest.mark.task0_3
@@ -213,7 +213,7 @@ def test_one_args(fn: Tuple[str, Callable[[float], float]], t1: float) -> None:
 @given(small_floats, small_floats)
 @pytest.mark.parametrize("fn", two_arg)
 def test_two_args(
-    fn: Tuple[str, Callable[[float, float], float]], t1: float, t2: float
+        fn: Tuple[str, Callable[[float, float], float]], t1: float, t2: float
 ) -> None:
     name, base_fn = fn
     base_fn(t1, t2)

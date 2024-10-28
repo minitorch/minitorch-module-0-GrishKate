@@ -127,8 +127,10 @@ def zipWith(f, lst1, lst2):
 
 
 def reduce(f, lst):
-    a = f(lst[0], lst[1])
-    for i in range(2, len(lst)):
+    if len(lst) == 0:
+        return 0.0
+    a = lst[0]
+    for i in range(1, len(lst)):
         a = f(a, lst[i])
     return a
 
